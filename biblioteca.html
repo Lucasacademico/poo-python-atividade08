@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário de Cadastro</title>
+    <style>
+        .form-section {
+            display: none;
+        }
+
+        .form-section.active {
+            display: block;
+        }
+
+        .message {
+            color: green;
+            font-weight: bold;
+        }
+
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+    <script>
+        function showSection(sectionId) {
+            document.querySelectorAll('.form-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+        }
+
+        function handleFormSubmit(event, formId) {
+            event.preventDefault(); // Impede o comportamento padrão do formulário
+
+            const form = document.getElementById(formId);
+            const messageDiv = document.createElement('div');
+
+            // Aqui você pode adicionar a lógica para processar os dados do formulário, por exemplo, enviando para um servidor
+            if (form.checkValidity()) {
+                messageDiv.className = 'message';
+                messageDiv.textContent = 'Cadastro realizado com sucesso!';
+            } else {
+                messageDiv.className = 'error';
+                messageDiv.textContent = 'Por favor, preencha todos os campos corretamente.';
+            }
+
+            form.appendChild(messageDiv); // Exibe a mensagem abaixo do formulário
+            form.reset(); // Reseta o formulário
+        }
+    </script>
+</head>
+
+<body>
+
+    <h1>Cadastro</h1>
+    <nav>
+        <button onclick="showSection('autorSection')">Cadastro de Autor</button>
+        <button onclick="showSection('livroSection')">Cadastro de Livro</button>
+        <button onclick="showSection('bibliotecaSection')">Registro de Biblioteca</button>
+    </nav>
+
+    <!-- Formulário de Autor -->
+    <div id="autorSection" class="form-section active">
+        <h2>Cadastro de Autor</h2>
+        <form id="formAutor" onsubmit="handleFormSubmit(event, 'formAutor')">
+            <label for="nome_autor">Nome do Autor:</label>
+            <input type="text" id="nome_autor" name="nome_autor" required><br><br>
+            <label for="livros_autor">Obras:</label>
+            <input type="text" id="livros_autor" name="livros_autor" required><br><br>
+            <button type="submit" id="submit_autor">Cadastrar Autor</button>
+        </form>
+    </div>
+
+    <!-- Formulário de Livro -->
+    <div id="livroSection" class="form-section">
+        <h2>Cadastro de Livro</h2>
+        <form id="formLivro" onsubmit="handleFormSubmit(event, 'formLivro')">
+            <label for="titulo_livro">Título do Livro:</label>
+            <input type="text" id="titulo_livro" name="titulo_livro" required><br><br>
+            <label for="autor_livro">Autor do Livro:</label>
+            <input type="text" id="autor_livro" name="autor_livro" required><br><br>
+            <label for="codigo_livro">Código do Livro:</label>
+            <input type="text" id="codigo_livro" name="codigo_livro" required><br><br>
+            <label for="disponibilidade">Disponível:</label>
+            <select id="disponibilidade" name="disponibilidade">
+                <option value="Sim">Sim</option>
+                <option value="Não">Não</option>
+            </select><br><br>
+            <button type="submit" id="submit_livro">Cadastrar Livro</button>
+        </form>
+    </div>
+
+    <!-- Formulário de Biblioteca -->
+    <div id="bibliotecaSection" class="form-section">
+        <h2>Registro de Biblioteca</h2>
+        <form id="formBiblioteca" onsubmit="handleFormSubmit(event, 'formBiblioteca')">
+            <label for="nome_biblioteca">Nome da Biblioteca:</label>
+            <input type="text" id="nome_biblioteca" name="nome_biblioteca" required><br><br>
+            <label for="livro_codigo">Código do Livro:</label>
+            <input type="text" id="livro_codigo" name="livro_codigo" required><br><br>
+            <label for="cliente_nome">Nome do Cliente:</label>
+            <input type="text" id="cliente_nome" name="cliente_nome" required><br><br>
+            <button type="submit" id="submit_biblioteca">Registrar Biblioteca</button>
+        </form>
+    </div>
+
+</body>
+
+</html>
